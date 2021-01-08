@@ -2,8 +2,7 @@ const keywords = [];
 
 let currentKeywords = [];
 
-const keywordsCategories = [
-    {
+const keywordsCategories = [{
         name: 'Programmation',
         keywords: ['Javascript', 'Promises', 'React', 'Vue JS', 'Angular', 'ES6']
     },
@@ -37,7 +36,7 @@ const toggleKeyword = (keyword) => {
         currentKeywords.push(keyword);
     }
 
-    reloadArticles();
+    reloadArticles(keyword);
 };
 
 // The first argument is the keyword's label, what will be visible by the user.
@@ -67,16 +66,24 @@ const addNewKeyword = (label, keyword) => {
         </div>
     `;
 
-    reloadArticles();
+    reloadArticles(keyword);
     resetKeywordsUl();
 };
 
 // We reload the articles depends of the currentKeywords
 // TODO: Modify this function to display only articles that contain at least one of the selected keywords.
-const reloadArticles = () => {
+const reloadArticles = (keyword) => {
     document.querySelector('.articlesList').innerHTML = '';
+    let articlesToShow = []
+    data.articles.forEach((article) => {
+      article.tags.forEach((tag) => {
+        if (tag == keyword) {
+            articlesToShow.push(article)
+        }
+      })
+    })
+
     
-    const articlesToShow = data.articles;
     articlesToShow.forEach((article) => {
         document.querySelector('.articlesList').innerHTML += `
             <article>
@@ -122,7 +129,7 @@ const showKeywordsList = (value) => {
     if (value.length >= 3) {
         const keyWordUl = document.querySelector(".inputKeywordsHandle ul");
         resetKeywordsUl();
-        
+
         // This will allow you to add a new element in the list under the text input
         // On click, we add the keyword, like so:
         // keyWordUl.innerHTML += `
