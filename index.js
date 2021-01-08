@@ -106,10 +106,9 @@ const resetInput = () => {
 };
 
 // Clean a keyword to lowercase and without special characters
-// TODO: Make the cleaning
+// DONE: Make the cleaning
 const cleanedKeyword = (keyword) => {
-    const cleanedKeyword = keyword;
-
+    const cleanedKeyword = keyword.replace(/[^a-zA-Z ]/g, "").toLowerCase();
     return cleanedKeyword;
 };
 
